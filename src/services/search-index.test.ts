@@ -8,6 +8,16 @@ describe('SearchIndex', () => {
         searchIndex = new SearchIndex();
     });
 
+    test('should index a single page', () => {
+        const page1 = initPage('1');
+        const token = 'apple';
+
+        searchIndex.indexPage(token, page1);
+
+        const pages = searchIndex.search(token);
+        expect(pages.length).toBe(1);
+    });
+
     test('should properly sort pages when token counts are all different', () => {
         const page1 = initPage('1');
         const page2 = initPage('2');
@@ -59,6 +69,17 @@ describe('SearchIndex', () => {
         const data = searchIndex.indexPage(token, page1);
 
         expect(data.pagesAdded).toBe(0);
+    });
+
+    test('should return 0 pages after the search index is cleared', () => {
+        const page1 = initPage('1');
+        const token = 'apple';
+
+        searchIndex.indexPage(token, page1);
+        searchIndex.clear();
+
+        const pages = searchIndex.search(token);
+        expect(pages.length).toBe(0);
     });
 
     function initPage(id: string, title = randomString()): Page {
