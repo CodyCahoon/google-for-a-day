@@ -1,5 +1,7 @@
 @import '../../sass/colors';
 
+$c-visited: $c-indigo-400;
+
 .search-result {
     padding: 10px 0;
 
@@ -9,7 +11,7 @@
             font-size: 18px;
 
             &:visited {
-                color: $c-indigo-400;
+                color: $c-visited;
             }
         }
 
