@@ -1,0 +1,41 @@
+@import '../../sass/colors';
+
+$v-border-radius: 4px;
+
+.search-bar {
+    display: flex;
+    margin-bottom: 20px;
+    width: 400px;
+
+    &__input {
+        padding: 10px;
+        flex-grow: 1;
+        height: 40px;
+        border: 1px solid $c-gray-700;
+        border-radius: 4px;
+        margin-right: 4px;
+        font-size: 14px;
+
+        &:focus {
+            border-color: $c-blue-400;
+            outline: none;
+        }
+    }
+
+    &__button {
+        cursor: pointer;
+        background-color: $c-blue-400;
+        color: white;
+        height: 40px;
+        border: 1px solid $c-blue-400;
+        border-radius: 4px;
+        width: 100px;
+        transition: all 200ms;
+        font-size: 14px;
+
+        &:hover {
+            background-color: $c-blue-700;
+            border-color: $c-blue-700;
+        }
+    }
+}

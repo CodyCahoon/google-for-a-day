@@ -1,0 +1,59 @@
+@import 'sass/colors';
+
+$c-active: $c-blue-400;
+$c-inactive: $c-gray-700;
+
+.app {
+    width: 75vw;
+    margin: 0 auto;
+
+    img {
+        margin-bottom: 40px;
+    }
+
+    ul {
+        margin: 0 0 20px;
+        padding: 0;
+    }
+
+    .nav-item {
+        cursor: pointer;
+        color: $c-inactive;
+        background-color: transparent;
+        border: none;
+        font-size: 18px;
+        position: relative;
+        margin-right: 8px;
+        outline: none;
+        min-width: 80px;
+
+        &:hover,
+        &:focus {
+            &:after {
+                transform: scale(1, 1);
+            }
+        }
+
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: $c-inactive;
+            transform: scale(0, 1);
+            transition: all 200ms;
+        }
+
+        &--active {
+            color: $c-active;
+            font-weight: 700;
+
+            &::after {
+                background-color: $c-active;
+                transform: scale(1, 1);
+            }
+        }
+    }
+}

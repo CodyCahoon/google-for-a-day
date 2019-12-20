@@ -9,13 +9,13 @@ export interface ISearchResult {
 
 const SearchResult = (props: ISearchResult) => {
     return (
-        <div className={'search-result'}>
-            <h2 className={'search-result__title'}>
-                <a href={props.url} target={'_blank'}>
+        <div className="search-result">
+            <h2 className="search-result__title">
+                <a href={props.url} target="_blank'" rel="noopener noreferrer">
                     {props.title}
                 </a>
             </h2>
-            <span className={'search-result__occurrences'}>{props.occurrences}</span>
+            <span className="search-result__occurrences">{props.occurrences}</span>
             <span>{props.occurrences === 1 ? ' occurrence' : ' occurrences'}</span>
         </div>
     );

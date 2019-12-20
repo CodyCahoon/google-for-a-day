@@ -4,8 +4,15 @@
     padding: 10px 0;
 
     &__title {
-        color: $c-blue-400;
-        font-size: 18px;
+        a {
+            color: $c-blue-400;
+            font-size: 18px;
+
+            &:visited {
+                color: $c-indigo-400;
+            }
+        }
+
         margin: 0;
         font-weight: 500;
     }
