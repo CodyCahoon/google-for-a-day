@@ -8,11 +8,15 @@ A Google-like index and search application which allows a user to enter a url to
 
 ### Prerequisites
 
-| Library | Version | Install                                    | Check Version |
-| ------- | ------- | ------------------------------------------ | ------------- |
-| yarn    | 1.21.1  | `brew install yarn` or `brew upgrade yarn` | `yarn -v`     |
+| Library | Version | Install             | Check Version |
+| ------- | ------- | ------------------- | ------------- |
+| yarn    | 1.21.1  | `brew install yarn` | `yarn -v`     |
 
 ### Running
+
+#### Automated
+
+#### Manually
 
 | Order | Command                      | Purpose                                               |
 | ----- | ---------------------------- | ----------------------------------------------------- |

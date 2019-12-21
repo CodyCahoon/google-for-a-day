@@ -24,6 +24,27 @@ const App: React.FC = () => {
 
     const onSearch = (term: string) => {
         console.log(term);
+
+        fetch(`https://localhost:8080/index?url=${term}`)
+            .then(data => data.formData())
+            .then((json: any) => {
+                debugger;
+            })
+            .catch(e => {
+                debugger;
+            });
+    };
+
+    const onIndex = (url: string) => {
+        console.log('url: ', url);
+        fetch(`/index?url=${url}`)
+            .then(resp => resp.body)
+            .then((json: any) => {
+                debugger;
+            })
+            .catch(e => {
+                debugger;
+            });
     };
 
     const renderSearchResult = (s: ISearchResult, index: number) => {
@@ -50,7 +71,7 @@ const App: React.FC = () => {
                     <SearchBar
                         buttonText={'Index'}
                         placeholder={'Paste a url to index'}
-                        onSearch={onSearch}
+                        onSearch={onIndex}
                     />
                 </div>
             );

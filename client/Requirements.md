@@ -18,4 +18,3 @@
 2. [ ] User displays all indexed pages which contains search term(s), include title, link to page, number of word occurences
 3. [ ] System sorts pages by number of term occurences (highest first)
 4. [ ] System does not return pages with 0 occurences
-
