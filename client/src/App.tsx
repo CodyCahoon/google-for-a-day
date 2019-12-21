@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import './App.scss';
-import SearchResult, { ISearchResult } from './components/SearchResult/SearchResult';
-import SearchBar from './components/SearchBar/SearchBar';
 import logo from './logo.svg';
+import Search from './components/Search/Search';
+import Index from './components/Index/Index';
 
 const App: React.FC = () => {
     const indexTab = '1';
@@ -15,68 +15,14 @@ const App: React.FC = () => {
         }
     };
 
-    const searchResults: ISearchResult[] = [
-        { title: 'Example', url: 'https://www.google.com', occurrences: 10 },
-        { title: 'Example', url: 'https://www.google.com', occurrences: 10 },
-        { title: 'Example', url: 'https://www.google.com', occurrences: 10 },
-        { title: 'Example', url: 'https://www.google.com', occurrences: 10 },
-    ];
-
-    const onSearch = (term: string) => {
-        console.log(term);
-
-        fetch(`https://localhost:8080/index?url=${term}`)
-            .then(data => data.formData())
-            .then((json: any) => {
-                debugger;
-            })
-            .catch(e => {
-                debugger;
-            });
-    };
-
-    const onIndex = (url: string) => {
-        console.log('url: ', url);
-        fetch(`/index?url=${url}`)
-            .then(resp => resp.body)
-            .then((json: any) => {
-                debugger;
-            })
-            .catch(e => {
-                debugger;
-            });
-    };
-
-    const renderSearchResult = (s: ISearchResult, index: number) => {
-        return <SearchResult key={index} title={s.title} url={s.url} occurrences={s.occurrences} />;
-    };
-
     const renderTab = () => {
         if (activeTab === searchTab) {
-            return (
-                <div>
-                    <SearchBar
-                        buttonText={'Search'}
-                        placeholder={'Search for through indexed sites'}
-                        onSearch={onSearch}
-                    />
-                    {searchResults.map(renderSearchResult)}
-                </div>
-            );
+            return <Search />;
         }
 
         if (activeTab === indexTab) {
-            return (
-                <div>
-                    <SearchBar
-                        buttonText={'Index'}
-                        placeholder={'Paste a url to index'}
-                        onSearch={onIndex}
-                    />
-                </div>
-            );
+            return <Index />;
         }
-
         return null;
     };
 
