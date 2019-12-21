@@ -1,5 +1,4 @@
 import { ParseUtil } from "./parse.util";
-import { SanitizeUtil } from "./sanitize.util";
 
 describe("ParseUtil", () => {
   describe("getPage", () => {
