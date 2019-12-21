@@ -3,6 +3,7 @@ import './SearchBar.scss';
 
 export interface ISearchBar {
     buttonText: string;
+    canSearch: boolean;
     placeholder: string;
     onSearch: Function;
 }
@@ -21,6 +22,9 @@ const SearchBar = (props: ISearchBar) => {
                     setSearch(event.target.value);
                 }}
                 onKeyPress={event => {
+                    if (!props.canSearch) {
+                        return;
+                    }
                     const isEventKey = event.key === 'Enter';
                     if (isEventKey) {
                         props.onSearch(search);
@@ -30,7 +34,11 @@ const SearchBar = (props: ISearchBar) => {
             <button
                 className="search-bar__button"
                 type="submit"
+                disabled={!props.canSearch}
                 onClick={() => {
+                    if (!props.canSearch) {
+                        return;
+                    }
                     props.onSearch(search);
                 }}>
                 {props.buttonText}

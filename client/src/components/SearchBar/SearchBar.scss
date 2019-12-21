@@ -33,6 +33,12 @@ $v-border-radius: 4px;
         transition: all 200ms;
         font-size: 14px;
 
+        &[disabled] {
+            cursor: not-allowed;
+            background-color: $c-gray-400;
+            border-color: $c-gray-400;
+        }
+
         &:hover {
             background-color: $c-blue-700;
             border-color: $c-blue-700;

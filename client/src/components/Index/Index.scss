@@ -1,0 +1,11 @@
+@import '../../sass/colors';
+
+.index {
+    &__text {
+        color: $c-gray-700;
+
+        &--focus {
+            font-weight: bold;
+        }
+    }
+}

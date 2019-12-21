@@ -1,7 +1,7 @@
 import express from "express";
 import { Parser } from "htmlparser2";
 import fetch, { FetchError, Response } from "node-fetch";
-import { SearchIndex } from "./services/search-index";
+import { IndexDatum, SearchIndex } from "./services/search-index";
 import { ParseUtil } from "./utils/parse.util";
 
 const searchIndex = new SearchIndex();
@@ -20,13 +20,14 @@ app.get("/index", (req: express.Request, res: express.Response) => {
     .then((resp: Response) => resp.text())
     .then((data: string) => processResponse(data, url))
     .catch((e: FetchError) => {
-      res.send({ messages: [e.errno] });
+      const indexDatum: IndexDatum = { pages: 0, tokens: 0 };
+      res.send(indexDatum);
     });
 
   function processResponse(data: string, url: string): void {
     const page = ParseUtil.getPage(data, url);
     const indexDatum = searchIndex.indexPage(page);
-    res.send({ indexDatum });
+    res.send(indexDatum);
   }
 });
 

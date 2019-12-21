@@ -12,11 +12,12 @@ export class SearchIndex {
 
   public indexPage(page: Page): IndexDatum {
     const data: IndexDatum = {
-      tokensIndexed: 0
+      pages: 1,
+      tokens: 0
     };
 
     const indexToken = (token: string) => {
-      data.tokensIndexed++;
+      data.tokens++;
       const hasToken = this.tokenToIdToPage.has(token);
       if (!hasToken) {
         this.tokenToIdToPage.set(token, new Map());
@@ -34,7 +35,7 @@ export class SearchIndex {
       idsToOccurrences!.set(page.url, tokenCount + 1);
     };
 
-    page.tokens.forEach(token => indexToken(token));
+    page.tokens.forEach((token: string) => indexToken(token));
 
     return data;
   }
@@ -72,7 +73,8 @@ export class SearchIndex {
 }
 
 export interface IndexDatum {
-  tokensIndexed: number;
+  pages: number;
+  tokens: number;
 }
 
 export interface SearchDatum {
