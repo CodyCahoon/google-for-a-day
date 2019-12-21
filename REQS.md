@@ -1,10 +1,10 @@
 ## User Flow
 
-1. [ ] User is able to toggle between indexing and searching
+1. [x] User is able to toggle between indexing and searching
 
 ### Indexing
 
-1. [ ] User is able to enter a URL to index
+1. [x] User is able to enter a URL to index
 2. [ ] System index every word of content (ignore HTML tags) for a page
 3. [ ] System stores the title of the page
 4. [ ] System will index up to N levels deep (default = 3) using anchor tags

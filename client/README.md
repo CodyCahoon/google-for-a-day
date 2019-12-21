@@ -1,8 +1,4 @@
-# google-for-a-day
-
-## Purpose
-
-A Google-like index and search application which allows a user to enter a url to index and then search for specific tokens from indexed sites
+# google-for-a-day - UI
 
 ## Setup
 
@@ -14,15 +10,11 @@ A Google-like index and search application which allows a user to enter a url to
 
 ### Running
 
-#### Automated
-
-#### Manually
-
 | Order | Command                      | Purpose                                               |
 | ----- | ---------------------------- | ----------------------------------------------------- |
 | 1     | `yarn install`               | Install any dependencies needed for build/development |
 | 2     | `yarn start`                 | Starts the development server                         |
-| 3     | Navigate to `localhost:3000` | View the running code base in development mode        |
+| 3     | Navigate to `localhost:3000` | View the running codebase in development mode         |
 
 ### Tests
 
