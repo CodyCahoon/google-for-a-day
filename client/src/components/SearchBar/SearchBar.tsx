@@ -13,6 +13,7 @@ const SearchBar = (props: ISearchBar) => {
     return (
         <div className="search-bar">
             <input
+                autoFocus={true}
                 className="search-bar__input"
                 type="search"
                 placeholder={props.placeholder}

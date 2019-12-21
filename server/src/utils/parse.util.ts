@@ -3,7 +3,7 @@ import { Page } from "../interfaces/page.interface";
 import { TokenUtil } from "./token.util";
 import { UrlUtil } from "./url.util";
 
-export namespace ParserUtil {
+export namespace ParseUtil {
   function getTitle(data: string): string | null {
     let title: string = null;
     const tags: string[] = [];
@@ -22,7 +22,7 @@ export namespace ParserUtil {
       }
     };
 
-    parse(data, { onopentag, ontext, onclosetag });
+    parse(data, { onclosetag, onopentag, ontext });
     return title;
   }
 
@@ -48,22 +48,31 @@ export namespace ParserUtil {
       tokens.push(...TokenUtil.tokenize(text));
     };
 
-    parse(data, { onopentag, ontext, onclosetag });
+    parse(data, { onclosetag, onopentag, ontext });
     return tokens;
   }
+
+  const isNotEmpty = (href: string) => !!href;
+  const isNotMailTo = (href: string) => !href.startsWith("mailto:");
+  const isNotTelephone = (href: string) => !href.startsWith("tel:");
+  const isNotIdHref = (href: string) => !href.startsWith("#");
 
   function getHrefs(data: string): string[] {
     const hrefs = new Set<string>();
 
     const onopentag = (tag: string, attributes: { [key: string]: any }) => {
       if (tag === "a") {
-        const href = attributes?.href?.trim();
+        const href = attributes?.href?.trim().toLowerCase();
         hrefs.add(href);
       }
     };
 
     parse(data, { onopentag });
-    return Array.from(hrefs);
+    return Array.from(hrefs)
+      .filter(isNotEmpty)
+      .filter(isNotIdHref)
+      .filter(isNotMailTo)
+      .filter(isNotTelephone);
   }
 
   function parse(data: string, config: ParserConfig): void {
@@ -74,7 +83,7 @@ export namespace ParserUtil {
 
   export function getPage(data: string, url: string): Page {
     const hrefPrefix = UrlUtil.getProtocolWithHostname(url);
-    const externalUrls = getHrefs(data).map(href =>
+    const externalUrls = getHrefs(data).map((href: string) =>
       UrlUtil.hasHostname(href) ? href : hrefPrefix + href
     );
 
