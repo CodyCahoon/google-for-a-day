@@ -63,9 +63,9 @@ export class SearchIndex {
       .sort((a: SearchDatum, b: SearchDatum) => {
         const diff = b.occurrences - a.occurrences;
         if (diff === 0) {
-          return a.title
-            .toLocaleLowerCase()
-            .localeCompare(b.title.toLocaleLowerCase());
+          const titleA = (a.title || "") as string;
+          const titleB = (b.title || "") as string;
+          return titleA.toLowerCase().localeCompare(titleB.toLowerCase());
         }
         return diff;
       });

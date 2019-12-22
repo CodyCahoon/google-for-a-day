@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './SearchBar.scss';
+import Button from '../Button/Button';
 
 export interface ISearchBar {
     buttonText: string;
@@ -31,18 +32,13 @@ const SearchBar = (props: ISearchBar) => {
                     }
                 }}
             />
-            <button
-                className="search-bar__button"
+            <Button
+                isDisabled={!props.canSearch}
+                onClickFn={() => props.onSearch(search)}
+                theme="primary"
+                text={props.buttonText}
                 type="submit"
-                disabled={!props.canSearch}
-                onClick={() => {
-                    if (!props.canSearch) {
-                        return;
-                    }
-                    props.onSearch(search);
-                }}>
-                {props.buttonText}
-            </button>
+            />
         </div>
     );
 };

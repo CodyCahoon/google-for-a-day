@@ -1,0 +1,48 @@
+@import '../../sass/colors';
+
+button {
+    cursor: pointer;
+    color: white;
+    height: 40px;
+    border-radius: 4px;
+    width: 100px;
+    transition: all 200ms;
+    font-size: 14px;
+    margin-left: 4px;
+}
+
+.button {
+    &--primary {
+        background-color: $c-blue-400;
+        color: white;
+        border: 1px solid $c-blue-400;
+
+        &[disabled] {
+            cursor: not-allowed;
+            background-color: $c-gray-400;
+            border-color: $c-gray-400;
+        }
+
+        &:hover:not([disabled]) {
+            background-color: $c-blue-700;
+            border-color: $c-blue-700;
+        }
+    }
+
+    &--secondary {
+        background-color: transparent;
+        color: $c-blue-400;
+        border: 1px solid $c-blue-400;
+
+        &[disabled] {
+            cursor: not-allowed;
+            color: $c-gray-400;
+            border-color: $c-gray-400;
+        }
+
+        &:hover:not([disabled]) {
+            color: $c-blue-700;
+            border-color: $c-blue-700;
+        }
+    }
+}

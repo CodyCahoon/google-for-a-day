@@ -2,9 +2,10 @@ import express from "express";
 import { Parser } from "htmlparser2";
 import fetch, { FetchError, Response } from "node-fetch";
 import { IndexDatum, SearchIndex } from "./services/search-index";
+import { SearchService } from "./services/search.service";
 import { ParseUtil } from "./utils/parse.util";
 
-const searchIndex = new SearchIndex();
+const searchService = new SearchService();
 const app = express();
 const port = 8080;
 
@@ -16,19 +17,20 @@ app.get("/index", (req: express.Request, res: express.Response) => {
 
   console.log(`[INDEX ] ${url}`);
 
-  fetch(url)
-    .then((resp: Response) => resp.text())
-    .then((data: string) => processResponse(data, url))
-    .catch((e: FetchError) => {
-      const indexDatum: IndexDatum = { pages: 0, tokens: 0 };
-      res.send(indexDatum);
-    });
+  console.time("name");
+  searchService.indexUrl(url).then((t: IndexDatum) => {
+    console.log(t);
+    console.timeEnd("name");
+    res.send(t);
+  });
+});
 
-  function processResponse(data: string, url: string): void {
-    const page = ParseUtil.getPage(data, url);
-    const indexDatum = searchIndex.indexPage(page);
-    res.send(indexDatum);
-  }
+/**
+ * Clears the index
+ */
+app.get("/index-clear", (req: express.Request, res: express.Response) => {
+  searchService.clearIndex();
+  res.send(true);
 });
 
 /**
@@ -39,7 +41,7 @@ app.get("/search", (req: express.Request, res: express.Response) => {
 
   console.log(`[SEARCH] ${query}`);
 
-  const searchData = searchIndex.search(query);
+  const searchData = searchService.search(query);
   res.send(searchData);
 });
 

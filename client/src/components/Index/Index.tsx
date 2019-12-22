@@ -1,25 +1,34 @@
 import React, { useState } from 'react';
-import { index, IndexDatum } from '../../services/index.request';
+import { clearIndex, index, IndexDatum } from '../../services/index.request';
 import SearchBar from '../SearchBar/SearchBar';
 import './Index.scss';
+import Button from '../Button/Button';
 
 const Index: React.FC = () => {
+    const [clearIndexMessage, setClearIndexMessage] = useState('');
     const [indexDatum, setIndexDatum] = useState({ pages: 0, tokens: 0 } as IndexDatum);
-    const [showResults, setShowResults] = useState(false);
     const [isSearching, setSearching] = useState(false);
 
     const onIndex = (url: string) => {
         setSearching(true);
-        setShowResults(false);
         index(url).then((datum: IndexDatum) => {
+            setClearIndexMessage('');
             setIndexDatum(datum);
-            setShowResults(true);
             setSearching(false);
         });
     };
 
-    const render = () => {
-        if (!showResults) {
+    const onClear = () => {
+        setSearching(true);
+        clearIndex().then((message: string) => {
+            setClearIndexMessage(message);
+            setIndexDatum({ pages: 0, tokens: 0 });
+            setSearching(false);
+        });
+    };
+
+    const renderIndexDatum = () => {
+        if (isSearching) {
             return null;
         }
 
@@ -40,15 +49,38 @@ const Index: React.FC = () => {
         );
     };
 
+    const renderClearIndexMessage = () => {
+        if (isSearching) {
+            return null;
+        }
+
+        if (!clearIndexMessage) {
+            return null;
+        }
+
+        return <span>{clearIndexMessage}</span>;
+    };
+
     return (
         <div className="index">
-            <SearchBar
-                buttonText={'Index'}
-                canSearch={!isSearching}
-                placeholder={'Paste a url to index'}
-                onSearch={onIndex}
-            />
-            {render()}
+            <div className="index__bar">
+                <SearchBar
+                    buttonText={'Index URL'}
+                    canSearch={!isSearching}
+                    placeholder={'Enter a url to index'}
+                    onSearch={onIndex}
+                />
+                <Button
+                    isDisabled={false}
+                    onClickFn={onClear}
+                    theme="secondary"
+                    text={'Clear Index'}
+                    type={'button'}
+                />
+            </div>
+
+            {renderIndexDatum()}
+            {renderClearIndexMessage()}
         </div>
     );
 };
