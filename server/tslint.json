@@ -1,10 +1,16 @@
 {
-  "defaultSeverity": "warning",
-  "extends": ["tslint:recommended"],
-  "jsRules": {},
-  "rules": {
-    "quotemark": ["single"],
-    "trailing-comma": [false]
-  },
-  "rulesDirectory": []
+    "defaultSeverity": "warning",
+    "jsRules": {},
+    "rules": {
+        "ordered-imports": [
+            true,
+            {
+                "import-sources-order": "any",
+                "named-imports-order": "case-insensitive"
+            }
+        ],
+        "no-empty-interface": true,
+        "triple-equals": true
+    },
+    "rulesDirectory": []
 }

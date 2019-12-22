@@ -1,9 +1,6 @@
 import express from 'express';
-import { Parser } from 'htmlparser2';
-import fetch, { FetchError, Response } from 'node-fetch';
-import { IndexDatum, SearchIndex } from './services/search-index';
+import { IndexDatum } from './services/search-index';
 import { SearchService } from './services/search.service';
-import { ParseUtil } from './utils/parse.util';
 
 const searchService = new SearchService();
 const app = express();
