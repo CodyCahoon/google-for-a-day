@@ -1,13 +1,13 @@
 @import 'sass/colors';
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
-        'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    font-family: Source Sans Pro, Arial, Helvetica Neue, Helvetica, sans-serif !important;
+
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     margin: 40px;
     color: $c-gray-700;
-    background-color: $c-gray-100;
+    background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
 }
 
 code {

@@ -3,16 +3,32 @@ import { clearIndex, index, IndexDatum } from '../../requests/index.request';
 import SearchBar from '../SearchBar/SearchBar';
 import './Index.scss';
 import Button from '../Button/Button';
+import LoadingIcon from '../LoadingIcon/LoadingIcon';
+
+const emptyMessageOptions = [
+    'Nothing to search for here',
+    'I have nothing for you',
+    'Well you gotta search for something',
+    'Oops, forgot to enter a search term!',
+];
 
 const Index: React.FC = () => {
-    const [clearIndexMessage, setClearIndexMessage] = useState('');
+    const [message, setMessage] = useState('');
     const [indexDatum, setIndexDatum] = useState({ pages: 0, tokens: 0 } as IndexDatum);
     const [isSearching, setSearching] = useState(false);
 
     const onIndex = (url: string) => {
+        if (!url) {
+            const messageIndex = Math.floor(Math.random() * emptyMessageOptions.length);
+            setMessage(emptyMessageOptions[messageIndex]);
+            setIndexDatum({ pages: 0, tokens: 0 });
+            setSearching(false);
+            return;
+        }
+
         setSearching(true);
         index(url).then((datum: IndexDatum) => {
-            setClearIndexMessage('');
+            setMessage('');
             setIndexDatum(datum);
             setSearching(false);
         });
@@ -21,7 +37,7 @@ const Index: React.FC = () => {
     const onClear = () => {
         setSearching(true);
         clearIndex().then((message: string) => {
-            setClearIndexMessage(message);
+            setMessage(message);
             setIndexDatum({ pages: 0, tokens: 0 });
             setSearching(false);
         });
@@ -49,16 +65,23 @@ const Index: React.FC = () => {
         );
     };
 
-    const renderClearIndexMessage = () => {
+    const renderMessage = () => {
         if (isSearching) {
             return null;
         }
 
-        if (!clearIndexMessage) {
+        if (!message) {
             return null;
         }
 
-        return <span>{clearIndexMessage}</span>;
+        return <span>{message}</span>;
+    };
+
+    const renderLoadingIcon = () => {
+        if (isSearching) {
+            return <LoadingIcon />;
+        }
+        return null;
     };
 
     return (
@@ -71,16 +94,16 @@ const Index: React.FC = () => {
                     onSearch={onIndex}
                 />
                 <Button
-                    isDisabled={false}
+                    isDisabled={isSearching}
                     onClickFn={onClear}
                     theme="secondary"
                     text={'Clear Index'}
                     type={'button'}
                 />
             </div>
-
             {renderIndexDatum()}
-            {renderClearIndexMessage()}
+            {renderMessage()}
+            {renderLoadingIcon()}
         </div>
     );
 };

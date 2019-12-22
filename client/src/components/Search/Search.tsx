@@ -2,23 +2,35 @@ import React, { useState } from 'react';
 import SearchBar from '../SearchBar/SearchBar';
 import SearchResult from '../SearchResult/SearchResult';
 import { search, SearchDatum } from '../../requests/search.request';
+import './Search.scss';
+import LoadingIcon from '../LoadingIcon/LoadingIcon';
 
 const Search: React.FC = () => {
     const [searchResults, setSearchResults] = useState([] as SearchDatum[]);
-    const [showResults, setShowResults] = useState(false);
-    const [isSearching, setSearching] = useState(false);
+    const [isSearching, setIsSearched] = useState(false);
+    const [hasSearched, setHasSearched] = useState(false);
 
     const onSearch = (term: string) => {
-        setSearching(true);
+        if (!term) {
+            setHasSearched(true);
+            setSearchResults([]);
+            return;
+        }
+
+        setIsSearched(true);
         search(term).then((searchData: SearchDatum[]) => {
             setSearchResults(searchData);
-            setShowResults(true);
-            setSearching(false);
+            setIsSearched(false);
+            setHasSearched(true);
         });
     };
 
-    const render = () => {
-        if (!showResults) {
+    const renderSearchResults = () => {
+        if (isSearching) {
+            return <LoadingIcon />;
+        }
+
+        if (!hasSearched) {
             return null;
         }
 
@@ -41,7 +53,7 @@ const Search: React.FC = () => {
                 placeholder="Search through indexed sites"
                 onSearch={onSearch}
             />
-            {render()}
+            <div className="search__results">{renderSearchResults()}</div>
         </div>
     );
 };
