@@ -38,11 +38,19 @@ const Search: React.FC = () => {
             return <span>No results found.</span>;
         }
 
-        return searchResults.map((s: SearchDatum, index: number) => {
+        const mapToSearchResult = (s: SearchDatum, index: number) => {
             return (
                 <SearchResult key={index} title={s.title} url={s.url} occurrences={s.occurrences} />
             );
-        });
+        };
+
+        return (
+            <div>
+                <span>Found {searchResults.length}</span>
+                <span>{searchResults.length === 1 ? ' result' : ' results'}</span>
+                {searchResults.map(mapToSearchResult)}
+            </div>
+        );
     };
 
     return (
@@ -53,7 +61,7 @@ const Search: React.FC = () => {
                 placeholder="Search through indexed sites"
                 onSearch={onSearch}
             />
-            <div className="search__results">{renderSearchResults()}</div>
+            {renderSearchResults()}
         </div>
     );
 };

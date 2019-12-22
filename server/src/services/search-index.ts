@@ -13,10 +13,16 @@ import { Page } from '../interfaces/page.interface';
 export class SearchIndex {
     private tokenToIdToPage = new Map<string, Map<string, Page>>();
     private tokenToIdToOccurrences = new Map<string, Map<string, number>>();
+    private indexedUrls = new Set<string>();
 
     public clear(): void {
         this.tokenToIdToPage = new Map<string, Map<string, Page>>();
         this.tokenToIdToOccurrences = new Map<string, Map<string, number>>();
+        this.indexedUrls = new Set<string>();
+    }
+
+    public hasIndexedUrl(url: string): boolean {
+        return this.indexedUrls.has(url);
     }
 
     public indexPage(page: Page): IndexDatum {
@@ -42,6 +48,7 @@ export class SearchIndex {
         };
 
         page.tokens.forEach((token: string) => indexToken(token));
+        this.indexedUrls.add(page.url);
 
         return datum;
     }

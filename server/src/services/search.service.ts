@@ -4,7 +4,7 @@ import { IndexDatum, SearchDatum, SearchIndex } from './search-index';
 import { SanitizeUtil } from '../utils/sanitize.util';
 
 export class SearchService {
-    private maxIndexDepth = 3;
+    private maxIndexDepth = 1;
     private searchIndex = new SearchIndex();
 
     public clearIndex(): void {
@@ -17,7 +17,8 @@ export class SearchService {
             return this.getDefaultIndexDatum();
         }
 
-        const hasAlreadyIndexedUrl = parentUrls.includes(url);
+        const hasAlreadyIndexedUrl =
+            parentUrls.includes(url) || this.searchIndex.hasIndexedUrl(url);
         if (hasAlreadyIndexedUrl) {
             return this.getDefaultIndexDatum();
         }
@@ -26,13 +27,13 @@ export class SearchService {
             const page = ParseUtil.getPage(data, url);
             const indexDatum = this.searchIndex.indexPage(page);
 
+            if (page.externalUrls.length === 0) {
+                return Promise.resolve(indexDatum);
+            }
+
             const indexUrls = page.externalUrls.map((externalUrl: string) => {
                 return this.indexUrl(externalUrl, [...parentUrls, url]);
             });
-
-            if (indexUrls.length === 0) {
-                return Promise.resolve(indexDatum);
-            }
 
             return Promise.all(indexUrls).then((data: IndexDatum[]) => {
                 return data.reduce((total: IndexDatum, current: IndexDatum) => {

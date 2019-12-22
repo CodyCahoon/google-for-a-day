@@ -9,11 +9,12 @@ const port = 8080;
 /**
  * Index a site by url
  */
-app.get('/index', (req: express.Request, res: express.Response) => {
+app.post('/index', (req: express.Request, res: express.Response) => {
     const url = req.query ? req.query.url : '';
 
     console.log(`[INDEX ] ${url}`);
     searchService.indexUrl(url).then((t: IndexDatum) => {
+        res.status(201);
         res.send(t);
     });
 });
@@ -21,9 +22,10 @@ app.get('/index', (req: express.Request, res: express.Response) => {
 /**
  * Clears the index
  */
-app.get('/index-clear', (req: express.Request, res: express.Response) => {
+app.delete('/index', (req: express.Request, res: express.Response) => {
     console.log('[CLEAR ]');
     searchService.clearIndex();
+    res.status(200);
     res.send(true);
 });
 
@@ -35,6 +37,8 @@ app.get('/search', (req: express.Request, res: express.Response) => {
 
     console.log(`[SEARCH] ${query}`);
     const searchData = searchService.search(query);
+    const code = searchData.length > 0 ? 200 : 204;
+    res.status(code);
     res.send(searchData);
 });
 
