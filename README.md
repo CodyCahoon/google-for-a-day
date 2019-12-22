@@ -4,6 +4,10 @@
 
 A Google-like index and search application which allows a user to enter a url to index and then search for specific tokens from indexed sites
 
+### Information
+
+1. This index is done by exact (lowercase) match
+
 ## Setup
 
 ### Prerequisites

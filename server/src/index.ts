@@ -28,7 +28,7 @@ app.get('/index-clear', (req: express.Request, res: express.Response) => {
 });
 
 /**
- * Search by a token
+ * Search indexed sites by a token
  */
 app.get('/search', (req: express.Request, res: express.Response) => {
     const query = req.query ? req.query.query : '';
