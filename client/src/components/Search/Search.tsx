@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import SearchBar from '../SearchBar/SearchBar';
 import SearchResult from '../SearchResult/SearchResult';
-import { search, SearchDatum } from '../../services/search.request';
+import { search, SearchDatum } from '../../requests/search.request';
 
 const Search: React.FC = () => {
     const [searchResults, setSearchResults] = useState([] as SearchDatum[]);

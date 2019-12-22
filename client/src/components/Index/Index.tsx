@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { clearIndex, index, IndexDatum } from '../../services/index.request';
+import { clearIndex, index, IndexDatum } from '../../requests/index.request';
 import SearchBar from '../SearchBar/SearchBar';
 import './Index.scss';
 import Button from '../Button/Button';

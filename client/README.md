@@ -1,4 +1,4 @@
-# google-for-a-day - UI
+# google-for-a-day - client
 
 ## Setup
 
