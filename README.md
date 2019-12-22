@@ -11,6 +11,7 @@ A Google-like index and search application which allows a user to enter a url to
 | Library | Version | Install             | Check Version |
 | ------- | ------- | ------------------- | ------------- |
 | yarn    | 1.21.1  | `brew install yarn` | `yarn -v`     |
+| node    | 13.5.0  | `brew install node` | `node -v`     |
 
 ### Commands
 
