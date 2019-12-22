@@ -4,7 +4,7 @@ import { IndexDatum, SearchDatum, SearchIndex } from './search-index';
 import { SanitizeUtil } from '../utils/sanitize.util';
 
 export class SearchService {
-    private maxIndexDepth = 1;
+    private maxIndexDepth = 3;
     private searchIndex = new SearchIndex();
 
     public clearIndex(): void {

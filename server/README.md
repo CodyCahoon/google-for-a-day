@@ -11,17 +11,15 @@
 
 ### Running
 
+```
+yarn install; yarn start;
+```
+
 | Order | Command        | Purpose                                               |
 | ----- | -------------- | ----------------------------------------------------- |
 | 1     | `yarn install` | Install any dependencies needed for build/development |
-| 2     | `yarn start`   | Starts the development server                         |
+| 2     | `yarn start`   | Starts express server                                 |
 
 ### Tests
 
 To run unit tests: `yarn test`
-
-## Codebase
-
-### Prettier
-
-This code base is formatted using prettier, and run as a pre-commit hook using husky

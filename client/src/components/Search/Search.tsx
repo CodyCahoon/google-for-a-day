@@ -48,7 +48,7 @@ const Search: React.FC = () => {
             <div>
                 <span>Found {searchResults.length}</span>
                 <span>{searchResults.length === 1 ? ' result' : ' results'}</span>
-                {searchResults.map(mapToSearchResult)}
+                <div className="search__results">{searchResults.map(mapToSearchResult)}</div>
             </div>
         );
     };
