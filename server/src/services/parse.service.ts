@@ -80,10 +80,7 @@ export class ParseService {
     }
 
     private cleanData(data: string): string {
-        return data
-            .replace(/<meta.*<\/meta>/gm, '')
-            .replace(/<script.*<\/script>/gm, '')
-            .replace(/<style.*<\/style>/gm, '');
+        return data.replace(/<script.+?<\/script>/gm, '').replace(/<style.+?<\/style>/gm, '');
     }
 
     private cleanHref(href: string): string | null {
