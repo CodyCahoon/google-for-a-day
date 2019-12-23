@@ -13,7 +13,10 @@ app.post('/index', (req: express.Request, res: express.Response) => {
     const url = req.query ? req.query.url : '';
 
     console.log(`[INDEX ] ${url}`);
-    searchService.indexUrl(url).then((t: IndexDatum) => {
+    console.time('new');
+    searchService.index(url).then((t: IndexDatum) => {
+        console.timeEnd('new');
+
         res.status(201);
         res.send(t);
     });

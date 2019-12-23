@@ -6,7 +6,8 @@ A Google-like index and search application which allows a user to enter a url to
 
 ### Information
 
-1. This index is done by exact (lowercase) match
+1. Searching is done by exact match
+2. A max time of 5 seconds is put on loading a site
 
 ## Setup
 
