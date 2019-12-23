@@ -12,11 +12,8 @@ const port = 8080;
 app.post('/index', (req: express.Request, res: express.Response) => {
     const url = req.query ? req.query.url : '';
 
-    console.log(`[INDEX ] ${url}`);
-    console.time('new');
+    console.log(`Index "${url}"`);
     searchService.index(url).then((t: IndexDatum) => {
-        console.timeEnd('new');
-
         res.status(201);
         res.send(t);
     });
@@ -26,7 +23,7 @@ app.post('/index', (req: express.Request, res: express.Response) => {
  * Clears the index
  */
 app.delete('/index', (req: express.Request, res: express.Response) => {
-    console.log('[CLEAR ]');
+    console.log('Clearing Index');
     searchService.clearIndex();
     res.status(200);
     res.send(true);
@@ -38,7 +35,7 @@ app.delete('/index', (req: express.Request, res: express.Response) => {
 app.get('/search', (req: express.Request, res: express.Response) => {
     const query = req.query ? req.query.query : '';
 
-    console.log(`[SEARCH] ${query}`);
+    console.log(`Search "${query}"`);
     const searchData = searchService.search(query);
     const code = searchData.length > 0 ? 200 : 204;
     res.status(code);
