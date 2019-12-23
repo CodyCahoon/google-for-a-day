@@ -4,10 +4,11 @@
 
 A Google-like index and search application which allows a user to enter a url to index and then search for specific tokens from indexed sites
 
-### Information
+### Details
 
 1. Searching is done by exact match
-2. A max time of 5 seconds is put on loading a site
+2. A max time of 5 seconds is put on loading a site to index
+3. Sites must start with `http://`, `https://` or `www.` to be indexed
 
 ## Setup
 
