@@ -56,15 +56,25 @@ export namespace ParseUtil {
     const isNotMailTo = (href: string) => !href.startsWith('mailto:');
     const isNotTelephone = (href: string) => !href.startsWith('tel:');
     const isNotIdHref = (href: string) => !href.startsWith('#');
+    const removeQueryParams = (href: string) => {
+        const queryParamIndex = href.indexOf('?');
+        return queryParamIndex === -1 ? href : href.substring(0, queryParamIndex);
+    };
 
     function getHrefs(data: string): string[] {
         const hrefs = new Set<string>();
 
         const onopentag = (tag: string, attributes: { [key: string]: any }) => {
-            if (tag === 'a') {
-                const href = attributes?.href?.trim().toLowerCase();
-                hrefs.add(href);
+            if (tag !== 'a') {
+                return;
             }
+
+            const href = attributes.href;
+            if (!href) {
+                return;
+            }
+
+            hrefs.add(removeQueryParams(href.trim().toLowerCase()));
         };
 
         parse(data, { onopentag });

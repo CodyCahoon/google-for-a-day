@@ -11,15 +11,8 @@ export class SearchService {
         this.searchIndex.clear();
     }
 
-    public indexUrl(url: string, parentUrls: string[] = []): Promise<IndexDatum> {
-        const isAtMaxIndexDepth = parentUrls.length >= this.maxIndexDepth;
-        if (isAtMaxIndexDepth) {
-            return this.getDefaultIndexDatum();
-        }
-
-        const hasAlreadyIndexedUrl =
-            parentUrls.includes(url) || this.searchIndex.hasIndexedUrl(url);
-        if (hasAlreadyIndexedUrl) {
+    public indexUrl(url: string, depth = 1): Promise<IndexDatum> {
+        if (this.searchIndex.hasIndexedUrl(url)) {
             return this.getDefaultIndexDatum();
         }
 
@@ -27,12 +20,14 @@ export class SearchService {
             const page = ParseUtil.getPage(data, url);
             const indexDatum = this.searchIndex.indexPage(page);
 
-            if (page.externalUrls.length === 0) {
+            const isAtMaxIndexDepth = depth === this.maxIndexDepth;
+            const hasExternalUrls = page.externalUrls.length > 0;
+            if (isAtMaxIndexDepth || !hasExternalUrls) {
                 return Promise.resolve(indexDatum);
             }
 
             const indexUrls = page.externalUrls.map((externalUrl: string) => {
-                return this.indexUrl(externalUrl, [...parentUrls, url]);
+                return this.indexUrl(externalUrl, depth + 1);
             });
 
             return Promise.all(indexUrls).then((data: IndexDatum[]) => {
