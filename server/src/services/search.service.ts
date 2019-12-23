@@ -1,11 +1,13 @@
 import fetch, { Response } from 'node-fetch';
-import { ParseUtil } from '../utils/parse.util';
 import { IndexDatum, SearchDatum, SearchIndex } from './search-index';
 import { SanitizeUtil } from '../utils/sanitize.util';
 import { UrlUtil } from '../utils/url.util';
+import { ParseService } from './parse.service';
 
 export class SearchService {
     private maxIndexDepth = 1;
+    private maxExternalUrls = 150;
+    private parser = new ParseService();
     private searchIndex = new SearchIndex();
 
     public clearIndex(): void {
@@ -15,7 +17,7 @@ export class SearchService {
     public indexUrl(url: string, depth = 1): Promise<IndexDatum> {
         const cleanedUrl = UrlUtil.cleanUrl(url);
 
-        if (!UrlUtil.isValidUrl(url)) {
+        if (!UrlUtil.isValidUrl(cleanedUrl)) {
             return this.getDefaultIndexDatum();
         }
 
@@ -24,7 +26,7 @@ export class SearchService {
         }
 
         const indexData = (data: string) => {
-            const page = ParseUtil.getPage(data, cleanedUrl);
+            const page = this.parser.parseData(data, cleanedUrl);
             const indexDatum = this.searchIndex.indexPage(page);
 
             const isAtMaxIndexDepth = depth === this.maxIndexDepth;
@@ -33,9 +35,11 @@ export class SearchService {
                 return Promise.resolve(indexDatum);
             }
 
-            const indexUrls = page.externalUrls.map((externalUrl: string) => {
-                return this.indexUrl(externalUrl, depth + 1);
-            });
+            const indexUrls = page.externalUrls
+                .map((externalUrl: string) => {
+                    return this.indexUrl(externalUrl, depth + 1);
+                })
+                .slice(0, this.maxExternalUrls);
 
             return Promise.all(indexUrls).then((data: IndexDatum[]) => {
                 return data.reduce((total: IndexDatum, current: IndexDatum) => {

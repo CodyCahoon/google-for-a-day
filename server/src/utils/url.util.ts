@@ -21,6 +21,9 @@ export namespace UrlUtil {
     }
 
     export function isValidUrl(url: string): boolean {
+        if (!url) {
+            return false;
+        }
         return validUrlPrefixes.some(p => url.startsWith(p));
     }
 
