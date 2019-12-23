@@ -14,11 +14,10 @@
 yarn install; yarn start;
 ```
 
-| Order | Command                      | Purpose                                               |
-| ----- | ---------------------------- | ----------------------------------------------------- |
-| 1     | `yarn install`               | Install any dependencies needed for build/development |
-| 2     | `yarn start`                 | Starts the development server                         |
-| 3     | Navigate to `localhost:3000` | View the running codebase in development mode         |
+| Order | Command        | Purpose                                       |
+| ----- | -------------- | --------------------------------------------- |
+| 1     | `yarn install` | Installs dependencies for build/development   |
+| 2     | `yarn start`   | Starts development server at `localhost:3000` |
 
 ### Tests
 

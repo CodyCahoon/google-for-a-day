@@ -15,10 +15,10 @@
 yarn install; yarn start;
 ```
 
-| Order | Command        | Purpose                                               |
-| ----- | -------------- | ----------------------------------------------------- |
-| 1     | `yarn install` | Install any dependencies needed for build/development |
-| 2     | `yarn start`   | Starts express server                                 |
+| Order | Command        | Purpose                                     |
+| ----- | -------------- | ------------------------------------------- |
+| 1     | `yarn install` | Installs dependencies for build/development |
+| 2     | `yarn start`   | Starts express server at `localhost:8080`   |
 
 ### Tests
 

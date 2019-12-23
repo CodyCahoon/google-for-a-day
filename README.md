@@ -18,8 +18,6 @@ A Google-like index and search application which allows a user to enter a url to
 | yarn    | 1.21.1  | `brew install yarn` | `yarn -v`     |
 | node    | 13.5.0  | `brew install node` | `node -v`     |
 
-### Commands
-
 ```bash
 # start client
 cd client; yarn install; yarn start;
@@ -31,8 +29,6 @@ cd server; yarn install; yarn start;
 ## Testing
 
 Both the client and server are tested using jest
-
-### Commands
 
 ```bash
 # test client

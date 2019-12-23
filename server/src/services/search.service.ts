@@ -53,9 +53,7 @@ export class SearchService {
         let timeoutId: NodeJS.Timeout;
 
         const timeLimit$ = new Promise(resolve => {
-            timeoutId = setTimeout(() => {
-                resolve();
-            }, maxTimeoutMs);
+            timeoutId = setTimeout(() => resolve(), maxTimeoutMs);
         });
 
         const page$ = fetch(cleanedUrl).then((resp: Response) => resp.text());
