@@ -2,9 +2,10 @@ import fetch, { Response } from 'node-fetch';
 import { ParseUtil } from '../utils/parse.util';
 import { IndexDatum, SearchDatum, SearchIndex } from './search-index';
 import { SanitizeUtil } from '../utils/sanitize.util';
+import { UrlUtil } from '../utils/url.util';
 
 export class SearchService {
-    private maxIndexDepth = 3;
+    private maxIndexDepth = 1;
     private searchIndex = new SearchIndex();
 
     public clearIndex(): void {
@@ -12,12 +13,18 @@ export class SearchService {
     }
 
     public indexUrl(url: string, depth = 1): Promise<IndexDatum> {
-        if (this.searchIndex.hasIndexedUrl(url)) {
+        const cleanedUrl = UrlUtil.cleanUrl(url);
+
+        if (!UrlUtil.isValidUrl(url)) {
+            return this.getDefaultIndexDatum();
+        }
+
+        if (this.searchIndex.hasIndexedUrl(cleanedUrl)) {
             return this.getDefaultIndexDatum();
         }
 
         const indexData = (data: string) => {
-            const page = ParseUtil.getPage(data, url);
+            const page = ParseUtil.getPage(data, cleanedUrl);
             const indexDatum = this.searchIndex.indexPage(page);
 
             const isAtMaxIndexDepth = depth === this.maxIndexDepth;
@@ -39,7 +46,7 @@ export class SearchService {
             });
         };
 
-        return fetch(url)
+        return fetch(cleanedUrl)
             .then((resp: Response) => resp.text())
             .then((data: string) => indexData(data))
             .catch(() => this.getDefaultIndexDatum());

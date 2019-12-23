@@ -52,13 +52,23 @@ export namespace ParseUtil {
         return tokens;
     }
 
-    const isNotEmpty = (href: string) => !!href;
-    const isNotMailTo = (href: string) => !href.startsWith('mailto:');
-    const isNotTelephone = (href: string) => !href.startsWith('tel:');
-    const isNotIdHref = (href: string) => !href.startsWith('#');
-    const removeQueryParams = (href: string) => {
-        const queryParamIndex = href.indexOf('?');
-        return queryParamIndex === -1 ? href : href.substring(0, queryParamIndex);
+    const validHrefPrefixes = ['http', '/'];
+
+    const isValidHref = (href: string): boolean => {
+        if (!href) {
+            return false;
+        }
+        return validHrefPrefixes.some(p => href.startsWith(p));
+    };
+
+    const cleanHref = (href: string): string | null => {
+        if (!href) {
+            return null;
+        }
+
+        const cleanedHref = href.trim().toLowerCase();
+        const queryParamIndex = cleanedHref.indexOf('?');
+        return queryParamIndex === -1 ? cleanedHref : cleanedHref.substring(0, queryParamIndex);
     };
 
     function getHrefs(data: string): string[] {
@@ -69,20 +79,13 @@ export namespace ParseUtil {
                 return;
             }
 
-            const href = attributes.href;
-            if (!href) {
-                return;
-            }
-
-            hrefs.add(removeQueryParams(href.trim().toLowerCase()));
+            hrefs.add(attributes.href);
         };
 
         parse(data, { onopentag });
         return Array.from(hrefs)
-            .filter(isNotEmpty)
-            .filter(isNotIdHref)
-            .filter(isNotMailTo)
-            .filter(isNotTelephone);
+            .map(cleanHref)
+            .filter(isValidHref);
     }
 
     function parse(data: string, config: ParserConfig): void {
