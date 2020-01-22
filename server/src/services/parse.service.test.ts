@@ -37,7 +37,7 @@ describe('ParseUtil', () => {
     });
 
     it('should ignore hrefs when they start with "mailto:"', () => {
-        const data = '<body><a href="mailto:test@pinpoint.com">Snail Mail</a></body>';
+        const data = '<body><a href="mailto:test@google.com">Snail Mail</a></body>';
         const page = parse(data, 'http://www.test.com');
 
         expect(page.externalUrls).toEqual([]);

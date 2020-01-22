@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './App.scss';
-import logo from './logo.svg';
+import logo from './logo.png';
 import Search from './components/Search/Search';
 import Index from './components/Index/Index';
 
@@ -28,7 +28,7 @@ const App: React.FC = () => {
 
     return (
         <div className="app">
-            <img src={logo} alt="Pinpoint Logo" />
+            <img src={logo} alt="Google Logo" />
 
             <nav>
                 <ul>
